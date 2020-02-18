@@ -53,7 +53,7 @@ RSpec.describe 'Data API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/data', params: {} }
+      before { post '/data', params: { ip: "eeee" } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -61,7 +61,19 @@ RSpec.describe 'Data API', type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed: Ip can't be blank, Latitude can't be blank, Longitude can't be blank/)
+          .to match(/Validation failed: Latitude can't be blank, Longitude can't be blank/)
+      end
+    end
+
+    context 'when the ip parameter is missing' do
+      before { post '/data', params: {} }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a parameter missing message' do
+        expect(response.body).to match(/param is missing or the value is empty: ip/)
       end
     end
   end
