@@ -2,7 +2,7 @@ class CreateData < ActiveRecord::Migration[6.0]
   def change
     create_table :data do |t|
       t.string :ip
-      t.string :type
+      t.string :ip_type
       t.string :continent_code
       t.string :continent_name
       t.string :country_code

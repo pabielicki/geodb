@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_181939) do
 
   create_table "data", force: :cascade do |t|
     t.string "ip"
-    t.string "type"
+    t.string "ip_type"
     t.string "continent_code"
     t.string "continent_name"
     t.string "country_code"
