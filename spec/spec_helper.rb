@@ -14,6 +14,29 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  require 'webmock/rspec'
+  valid_response = {"ip":"134.201.250.155","type":"ipv4","continent_code":"NA",
+                    "continent_name":"North America","country_code":"US",
+                    "country_name":"United States","region_code":"CA",
+                    "region_name":"California","city":"Los Angeles","zip":"90012",
+                    "latitude":34.0655517578125,"longitude":-118.24053955078125,
+                    "location":{"geoname_id":5368361,"capital":"Washington D.C.",
+                                "languages":[{"code":"en","name":"English","native":"English"}],
+                                "country_flag":"http:\/\/assets.ipstack.com\/flags\/us.svg",
+                                "country_flag_emoji":"",
+                                "country_flag_emoji_unicode":"U+1F1FA U+1F1F8",
+                                "calling_code":"1","is_eu":false}}.to_json
+  config.before(:each) do |example|
+    valid_template = Addressable::Template.new "api.ipstack.com/134.201.250.155{?access_key}"
+    invalid_template = Addressable::Template.new "api.ipstack.com/eeee{?access_key}"
+    timeout_template = Addressable::Template.new "api.ipstack.com/timeout{?access_key}"
+    stub_request(:get, valid_template).
+      to_return(status: 200, body: valid_response, headers: {})
+    stub_request(:get, invalid_template).
+      to_return(status: 200, body: {"ip":"eeee"}.to_json, headers: {})
+    stub_request(:get, timeout_template).
+      to_timeout
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

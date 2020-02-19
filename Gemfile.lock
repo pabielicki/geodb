@@ -56,11 +56,15 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.1)
     concurrent-ruby (1.1.6)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     crass (1.0.6)
     database_cleaner (1.8.2)
     database_cleaner-active_record (1.8.0)
@@ -78,6 +82,7 @@ GEM
     ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashdiff (1.0.0)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     listen (3.1.5)
@@ -101,6 +106,7 @@ GEM
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     pg (1.2.2)
+    public_suffix (4.0.3)
     puma (4.3.1)
       nio4r (~> 2.0)
     rack (2.2.2)
@@ -154,6 +160,7 @@ GEM
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
     ruby_dep (1.5.0)
+    safe_yaml (1.0.5)
     shoulda-matchers (4.2.0)
       activesupport (>= 4.2.0)
     spring (2.1.0)
@@ -171,6 +178,10 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
+    webmock (3.8.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -194,6 +205,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  webmock
 
 RUBY VERSION
    ruby 2.6.3p62

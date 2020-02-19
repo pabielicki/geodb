@@ -35,14 +35,14 @@ RSpec.describe 'Data API', type: :request do
   end
 
   describe 'POST /data' do
-    let(:valid_datum) { build(:datum) }
+    let(:ip) { '134.201.250.155' }
 
     context 'when the request is valid' do
-      before { post '/data', params: { ip: valid_datum.ip }}
+      before { post '/data', params: { ip: ip }}
 
       it 'creates a datum' do
         json = JSON.parse(response.body)
-        expect(json['ip']).to eq(valid_datum.ip)
+        expect(json['ip']).to eq(ip)
         expect(json['latitude']).to_not eq(nil)
         expect(json['longitude']).to_not eq(nil)
       end
@@ -74,6 +74,17 @@ RSpec.describe 'Data API', type: :request do
 
       it 'returns a parameter missing message' do
         expect(response.body).to match(/param is missing or the value is empty: ip/)
+      end
+    end
+    context 'when the remote api is unavailable' do
+      before { post '/data', params: {ip: "timeout"} }
+      it 'returns status code 408' do
+        expect(response).to have_http_status(408)
+      end
+
+      it 'returns execution expired error' do
+        stub_request(:get, /api.ipstack.com/).to_timeout
+        expect(response.body).to match(/execution expired/)
       end
     end
   end

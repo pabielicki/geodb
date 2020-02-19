@@ -13,5 +13,9 @@ module ExceptionHandler
     rescue_from ActionController::ParameterMissing do |e|
       render json: {message: e.message}, status: :unprocessable_entity
     end
+
+    rescue_from Timeout::Error do |e|
+      render json: {message: e.message}, status: :request_timeout
+    end
   end
 end

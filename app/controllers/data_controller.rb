@@ -3,7 +3,7 @@ class DataController < ApplicationController
   before_action :set_datum, only: %i{show destroy}
 
   def create
-    @datum = Datum.create! GeolocationApi.get_geolocation(datum_params[:ip])
+    @datum = Datum.create!(GeolocationApi.get_geolocation(datum_params[:ip]))
     render json: @datum, status: :created
   end
 
