@@ -1,8 +1,14 @@
 # README
-* Configuration
-  Required environment variables:
-      GEO_POSTGRES_USERNAME
-      GEO_POSTGRES_PASSWORD
+### Requirements:
+  - docker
+  - docker-compose
+  - ipstack.com api key
+### Setup:
+  1. `docker-compose build --build-arg IPSTACK_API_KEY=YOUR_IPSTACK_API_KEY`
+  2. `docker-compose up`
+  3. `docker exec -it geodb_api_1 bundle exec rake db:create`
+  4. `docker exec -it geodb_api_1 bundle exec rake db:migrate`
 
-* How to run the test suite
+### Tests:
+  - `docker exec -it geodb_api_1 rspec`
 
