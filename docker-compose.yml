@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: kiasaki/alpine-postgres:9.5
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER:'postgres'
+      - POSTGRES_PASSWORD:'postgres'
+
+  api:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
